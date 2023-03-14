@@ -1,0 +1,40 @@
+class Solution {
+      static TreeNode prev;
+      static TreeNode first;
+      static TreeNode last;
+    public static void BST(TreeNode root)
+    {
+     if(root==null)
+     {
+         return;
+     }
+      
+     BST(root.left);
+        if(root.val<prev.val)
+        {
+            if(first==null)
+            { first=prev;
+              last=root;
+             }
+            else
+              {
+               last=root;
+              }
+        }
+        prev=root;
+        BST(root.right);
+     }
+  public void recoverTree(TreeNode root) {
+      prev=new TreeNode(Integer.MIN_VALUE);
+      first=last=null;
+      BST(root);
+      int r=first.val;
+            first.val=last.val;
+            last.val=r;
+       
+        
+        
+        
+        
+    }
+}
