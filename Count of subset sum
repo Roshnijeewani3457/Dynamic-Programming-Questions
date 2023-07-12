@@ -1,0 +1,110 @@
+// Memorization
+class Solution{
+    static int mod=(int)Math.pow(10,9)+7;
+    public static int count(int[] arr,int sum,int i,int[][] dp)
+   {
+     if(i==0 && sum>0) // if no of element is 0 and sum>0 then return 0;
+        return 0;
+     if(i==0 && sum==0) // if no of element is 0 and sum=0 then return 1;
+        return 1;
+     if(i==1) // if no of element is 1
+     {
+         if(sum==0)
+          {
+              if(arr[0]==0) // if no of element is 1 and sum=0 and arr[0]==0 i.e (arr={0} with sum=0) then return 2;
+                return 2;
+              else
+                return 1;
+          }
+          else
+          {
+              if(arr[0]==sum) 
+                 return 1;
+              else
+                return 0;
+          }
+         
+     }
+        
+    if(dp[i][sum]!=-1)
+     {
+         return dp[i][sum];
+     }
+     if(arr[i-1]<=sum)
+     {
+         return dp[i][sum]=count(arr,sum-arr[i-1],i-1,dp)%mod+count(arr,sum,i-1,dp)%mod;
+     }
+     else
+     {
+         return dp[i][sum]=count(arr,sum,i-1,dp)%mod;
+     }
+ }
+
+
+  public int perfectSum(int arr[],int n, int sum) 
+	{ 
+	    int[][] dp=new int[n+1][sum+1];
+	    for(int[] i:dp)
+	    {
+	        Arrays.fill(i,-1);
+	    }
+	    return count(arr,sum,n,dp)%mod;
+ } 
+}
+
+// Tabulation
+
+public int perfectSum(int arr[],int n, int sum) 
+	{ 
+	  int[][] dp=new int[n+1][sum+1];
+	    for(int i=1;i<sum+1;i++)
+	    {
+	       dp[0][i]=0; 
+	    }
+	    for(int i=0;i<n+1;i++)
+	    {
+	       dp[i][0]=1;
+	    }
+	    
+	    
+	   for(int i=1;i<n+1;i++)
+	    {
+	        for(int j=0;j<sum+1;j++) // we started j=0 bcoz when arr size is 1 then there can be more than 1 subset. 
+	    {
+	      
+	      if(arr[i-1]<=j)
+	      {
+	          dp[i][j]=dp[i-1][j-arr[i-1]]%(1000000007)+dp[i-1][j]%(1000000007);
+	      }
+	      else
+	      {
+	          dp[i][j]=dp[i-1][j]%(1000000007);
+	      }
+	      
+	      
+	    }
+	    
+	  }
+	    return dp[n][sum]%(1000000007);   
+	  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
