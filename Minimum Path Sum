@@ -1,0 +1,30 @@
+class Solution {
+    static int min=Integer.MAX_VALUE;
+    public static int pathsum(int i,int j,int[][] grid,int[][] dp)
+    {
+        
+      if(i<0 || j<0)
+          return 10000000;
+      if(i==0 && j==0)
+          return dp[i][j]=grid[i][j];
+      if(dp[i][j]!=-1)
+      {
+          return dp[i][j];
+      }
+      int up=grid[i][j]+pathsum(i-1,j,grid,dp);
+      int down=grid[i][j]+pathsum(i,j-1,grid,dp);
+      return dp[i][j]=Math.min(up,down);
+        
+        
+        }
+    public int minPathSum(int[][] grid) {
+        int[][] dp=new int[grid.length][grid[0].length];
+        for(int i[]:dp)
+        {
+            Arrays.fill(i,-1);
+        }
+        return pathsum(grid.length-1,grid[0].length-1,grid,dp);
+        
+    
+    }
+}
