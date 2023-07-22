@@ -1,0 +1,52 @@
+class Solution {
+    public static int lcs(String s,String str,int[][] dp)
+    {
+      for(int i=0;i<s.length()+1;i++)
+      {
+          for(int j=0;j<s.length()+1;j++)
+          {
+              if(i==0 || j==0)
+              {
+                  dp[i][j]=0;
+              }
+          }
+      }
+       
+       for(int i=1;i<s.length()+1;i++)
+      {
+          for(int j=1;j<s.length()+1;j++)
+          {
+             
+              if(s.charAt(i-1)==str.charAt(j-1))
+              {
+                  dp[i][j]=1+dp[i-1][j-1];
+              }
+              else
+              {
+                  dp[i][j]=Math.max(dp[i-1][j],dp[i][j-1]);
+              }
+              
+              
+              
+          }
+       } 
+        return dp[s.length()][s.length()];
+    }
+    public int minInsertions(String s) {
+        String str="";
+        for(int i=0;i<s.length();i++)
+        {
+            str=str+s.charAt(s.length()-1-i);
+        }
+     int[][] dp=new int[s.length()+1][s.length()+1];
+     int r=s.length()-lcs(s,str,dp);
+     return r;  
+        
+        
+        
+        
+        
+        
+        
+    }
+}
